@@ -4,6 +4,14 @@
 
 Open `index.html` in any modern browser. It is a self-contained, offline calculator; no installation or server is needed.
 
+## Published website password
+
+GitHub Pages publishes only an encrypted wrapper, built by `.github/workflows/pages.yml`. The password is stored in the repository Actions secret `DRUMFIT_SITE_PASSWORD`; it must not be committed. The build fails if that secret is absent. To change the password, update the secret and rerun **Publish locked DrumFit**.
+
+The published planner decrypts locally with PBKDF2-SHA256 (600,000 iterations) and AES-256-GCM. Incorrect passwords cannot decrypt the app. Refreshing asks for the password again; the password is not saved by the app. Existing browser-stored cable data remains at the same website origin. This is a static website lock, not server authentication: the source repository remains public, short passwords can be guessed offline, and browser-local data is not encrypted by this lock. No confidential data should be embedded in the public source.
+
+For a local deployment build, set `DRUMFIT_SITE_PASSWORD` in the environment and run `node build-locked.cjs`. Output is `_site/index.html`; publish only `_site`, never the source directory. `node test-lock.cjs` tests encryption and password rejection.
+
 ## Fix dimensions or use available drums
 
 Open **Fix sizes / choose stock** on a cable row. For flange diameter, barrel diameter and traverse (clear winding width), independently choose **Calculate**, **Fixed**, **Allowed options**, or **Range**. Each dimension accepts millimetres or inches. Fixed values are preserved exactly, including values that are not on the manufacturing grid. Enter lists as `35, 40, 48, 60`; ranges use `minimum, maximum, increment`, for example `35, 60, 1`. Calculated barrel diameter uses the smallest permitted diameter; use a list or range to try larger barrels. All modes still respect capacity, cable minimum barrel, shared width/flange limits and loading constraints.
