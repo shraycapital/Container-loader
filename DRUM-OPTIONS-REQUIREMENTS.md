@@ -1,6 +1,6 @@
 # Flexible drum inputs and available inventory
 
-Status: requested feature specification; this document does not implement the controls below.
+Status: implemented in the offline app for dimension modes, stock selection/allocation, flange-specific barrel minima, weight checks, results and saved data. Each cable row still uses one drum type; split rows to use several types. Custom empty weights remain user-supplied rather than derived from dimensions. The questions below remain business inputs to confirm.
 
 ## Goal
 

@@ -4,6 +4,20 @@
 
 Open `index.html` in any modern browser. It is a self-contained, offline calculator; no installation or server is needed.
 
+## Fix dimensions or use available drums
+
+Open **Fix sizes / choose stock** on a cable row. For flange diameter, barrel diameter and traverse (clear winding width), independently choose **Calculate**, **Fixed**, **Allowed options**, or **Range**. Each dimension accepts millimetres or inches. Fixed values are preserved exactly, including values that are not on the manufacturing grid. Enter lists as `35, 40, 48, 60`; ranges use `minimum, maximum, increment`, for example `35, 60, 1`. Calculated barrel diameter uses the smallest permitted diameter; use a list or range to try larger barrels. All modes still respect capacity, cable minimum barrel, shared width/flange limits and loading constraints.
+
+Under **Available drums & flange-specific barrel rules**, add stock IDs with complete dimensions, flange thickness, available quantity and optional empty/maximum loaded weights. Outside width must include the clear traverse, both flanges and any protrusions. Select **Available drums only**, **New / custom only**, or **Either** on each cable item. An optional stock ID restricts the stock choices. Available stock must also match the item's dimension settings. Stock is shared across cable rows and cannot be allocated beyond the entered quantity. Each cable row uses one drum type; split an item into separate rows to use multiple stock types. Inventory quantities are planning inputs, not permanently decremented by calculation.
+
+Flange-specific minimum barrel rules apply at the exact flange sizes entered. The larger of the flange rule and the cable minimum is enforced; unlisted flange sizes use the cable minimum only. Fixed values that conflict with these rules yield no compatible drum rather than being silently changed.
+
+Results show selected stock IDs or dimension modes. **Drum source & weight checks** shows stock reservations and stock loaded-weight checks. Stock empty weights replace the cable row's custom-drum weight. Blank weights remain unverified; known weight above a limit is rejected/reported even if another weight is missing. Custom-drum empty weight remains a user-supplied value that must be checked for the selected dimensions. The search favours more drums placed, then lower known payload excess, then shorter floor length and smaller footprint; it is a heuristic and cannot certify an optimum or impossibility.
+
+These settings, inventory and flange rules are included in browser autosave and portable JSON backups. Older backups default to calculated dimensions and custom drums. The 20 ft preset now uses the requested **20,000 kg planning payload limit**, rather than the carrier example's rated payload; saved plans retain their existing entered limit.
+
+Run `node test.cjs` and `node test-options.cjs` for the calculation and persistence checks.
+
 1. Select a 20 ft standard, 40 ft standard, 40 ft high cube, or 45 ft high cube dry container, or enter custom internal and door dimensions. Presets fill all six container measurements and payload fields; editing one switches the selection to Custom. Your cable list and drum rules stay in place.
 2. Enter each cable's OD in millimetres, length **per drum** in metres, and quantity of drums. Optional weights enable the payload check.
 3. Open **Drum rules & cable-capacity formula** and enter your manufacturer's rules.
